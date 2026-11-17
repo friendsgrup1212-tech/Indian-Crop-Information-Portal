@@ -1409,3 +1409,7 @@ window.cropCategories = [
 
 console.log("Crop Database Loaded Successfully!");
 console.log("Total Crops:", crops.length);
+window.crops = crops;
+window.totalCrops = crops.length;
+
+console.log("कुल फसलें:", crops.length);
