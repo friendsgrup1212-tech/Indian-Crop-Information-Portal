@@ -1,148 +1,56 @@
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>भारतीय कृषि ज्ञान केंद्र</title>
-
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KrishiVigyan - Complete Crop Encyclopedia</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Noto+Sans+Devanagari:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <header class="site-header">
-    <div class="container nav-wrap">
-      <a class="brand" href="#">🌱 भारतीय कृषि ज्ञान केंद्र</a>
-
-      <button class="menu-toggle" id="mobileMenuBtn">☰</button>
-
-      <nav id="navMenu">
-        <a href="#home">होम</a>
-        <a href="#crops">सभी फसलें</a>
-        <button id="languageBtn" class="language-btn">English</button>
-      </nav>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-
-        <div class="hero-copy">
-          <span class="eyebrow">🌱 भारतीय कृषि ज्ञान केंद्र</span>
-
-          <h1 id="mainTitle">
-            भारत की फसलों का
-            <span>सम्पूर्ण ज्ञान</span>
-          </h1>
-
-          <p id="mainSubtitle">
-            धान से लेकर गेहूँ, दलहन, तिलहन और बागवानी फसलों तक की पूरी जानकारी एक ही जगह प्राप्त करें।
-          </p>
-
-          <a href="#crops" class="primary-btn">फसलें देखें →</a>
+    <header class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <h1>🌱 KrishiVigyan <span id="sub-title">| कृषि विज्ञान</span></h1>
+            </div>
+            <button id="lang-toggle" class="lang-btn" onclick="toggleLanguage()">
+                Switch to English
+            </button>
         </div>
+    </header>
 
-        <div class="hero-art">
-          <div class="plant-emoji">🌾</div>
-          <h2>कृषि ही जीवन है</h2>
-          <p>खेती का ज्ञान, किसान की पहचान</p>
+    <section class="hero">
+        <div class="container">
+            <h2 id="hero-heading">सभी प्रमुख फसलों की संपूर्ण वैज्ञानिक जानकारी</h2>
+            <p id="hero-desc">वानस्पतिक नाम, रोग, कीट, जलवायु, तापमान, किस्में, उत्पत्ति स्थान और गुणसूत्र संख्या</p>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" onkeyup="filterCrops()" placeholder="फसल का नाम खोजें (जैसे: धान, Wheat, आम)...">
+            </div>
         </div>
-
-      </div>
-
-      <div class="container stats-grid">
-        <article class="stat-card">
-          <span>🌾</span>
-          <strong id="totalCropCount">0</strong>
-          <small>कुल फसलें</small>
-        </article>
-
-        <article class="stat-card">
-          <span>📚</span>
-          <strong id="categoryCount">6</strong>
-          <small>फसल श्रेणियाँ</small>
-        </article>
-
-        <article class="stat-card">
-          <span>🌐</span>
-          <strong>02</strong>
-          <small>भाषाएँ</small>
-        </article>
-
-        <article class="stat-card">
-          <span>🔬</span>
-          <strong>09</strong>
-          <small>जानकारी के विषय</small>
-        </article>
-      </div>
     </section>
 
-    <section class="crop-section" id="crops">
-      <div class="container">
-
-        <div class="section-heading">
-          <span class="section-kicker">कृषि ज्ञान</span>
-          <h2>फसलों की जानकारी</h2>
-          <p>अपनी पसंद की फसल खोजें और उसकी पूरी जानकारी पढ़ें।</p>
-        </div>
-
-        <div class="toolbar">
-          <label class="search-box">
-            🔎
-            <input
-              id="searchInput"
-              type="search"
-              placeholder="फसल का नाम खोजें..."
-            >
-          </label>
-
-          <select id="categoryFilter">
-            <option value="all">सभी श्रेणियाँ</option>
-          </select>
-        </div>
-
-        <div id="categoryContainer" class="category-list"></div>
-
-        <div class="results-line">
-          <span id="resultCount">0 फसलें</span>
-          <button id="resetBtn" class="reset-btn">
-            फ़िल्टर हटाएँ
-          </button>
-        </div>
-
-        <div id="cropContainer" class="crop-grid"></div>
-
-        <div id="noResults" class="no-results" hidden>
-          <div>🌱</div>
-          <h3>कोई फसल नहीं मिली</h3>
-          <p>दूसरा नाम या श्रेणी चुनकर देखें।</p>
-        </div>
-
-      </div>
-    </section>
-  </main>
-
-  <footer>
     <div class="container">
-      <strong>🌱 भारतीय कृषि ज्ञान केंद्र</strong>
-      <p>किसानों और विद्यार्थियों के लिए कृषि जानकारी का एक सरल मंच।</p>
+        <div class="category-tabs" id="categoryTabs">
+            <button class="tab-btn active" onclick="filterCategory('all')" data-hi="सभी फसलें" data-en="All Crops">सभी फसलें</button>
+            <button class="tab-btn" onclick="filterCategory('cereal')" data-hi="खाद्यान्न फसलें" data-en="Cereal Crops">खाद्यान्न फसलें</button>
+            <button class="tab-btn" onclick="filterCategory('pulse')" data-hi="दलहनी फसलें" data-en="Pulse Crops">दलहनी फसलें</button>
+            <button class="tab-btn" onclick="filterCategory('oilseed')" data-hi="तिलहनी फसलें" data-en="Oilseed Crops">तिलहनी फसलें</button>
+            <button class="tab-btn" onclick="filterCategory('commercial')" data-hi="व्यावसायिक फसलें" data-en="Commercial Crops">व्यावसायिक फसलें</button>
+            <button class="tab-btn" onclick="filterCategory('medicinal')" data-hi="औषधीय फसलें" data-en="Medicinal Crops">औषधीय फसलें</button>
+            <button class="tab-btn" onclick="filterCategory('horticulture')" data-hi="बागवानी फसलें" data-en="Horticulture Crops">बागवानी फसलें</button>
+        </div>
+
+        <main id="cropsContainer" class="crops-grid">
+            <!-- Crop cards JavaScript se yahan load honge -->
+        </main>
     </div>
-  </footer>
 
-  <!-- Crop Details Popup -->
-  <div class="modal" id="cropModal" aria-hidden="true">
-    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <footer>
+        <p id="footer-text">© 2026 KrishiVigyan Portal | कृषि छात्रों एवं किसानों के लिए समर्पित</p>
+    </footer>
 
-    <div class="modal-dialog">
-      <button class="modal-close" id="closeModal">×</button>
-      <div id="modalContent"></div>
-    </div>
-  </div>
-
-  <!-- पहले crops.js और फिर script.js लोड करें -->
-  <script src="crops.js"></script>
-  <script src="script.js"></script>
-
+    <script src="script.js"></script>
 </body>
 </html>
