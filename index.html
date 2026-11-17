@@ -1,0 +1,499 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+          content="Indian Crop Information Portal - Learn about Indian crops, botanical names, diseases, pests, climate, temperature, varieties and chromosome numbers in Hindi and English.">
+
+    <meta name="keywords"
+          content="Indian Agriculture, Crop Information, Farming, Hindi Agriculture, Crop Diseases">
+
+    <meta name="author" content="Indian Crop Information Portal">
+
+    <title>Indian Crop Information Portal | कृषि ज्ञान</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="container navbar">
+
+            <a href="#" class="logo">
+                <span class="logo-icon">🌾</span>
+
+                <div class="logo-text">
+                    <h2>Crop<span>Knowledge</span></h2>
+                    <small>Indian Agriculture Portal</small>
+                </div>
+            </a>
+
+            <nav class="nav-links">
+
+                <a href="#home" data-hi="होम" data-en="Home">होम</a>
+
+                <a href="#categories"
+                   data-hi="फसल श्रेणियाँ"
+                   data-en="Categories">फसल श्रेणियाँ</a>
+
+                <a href="#crops"
+                   data-hi="सभी फसलें"
+                   data-en="All Crops">सभी फसलें</a>
+
+                <a href="#about"
+                   data-hi="हमारे बारे में"
+                   data-en="About Us">हमारे बारे में</a>
+
+            </nav>
+
+            <div class="header-actions">
+
+                <button class="language-btn" id="languageBtn">
+                    🌐 English
+                </button>
+
+                <button class="menu-btn" id="menuBtn"
+                        aria-label="Open menu">
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= HERO SECTION ================= -->
+
+    <section class="hero" id="home">
+
+        <div class="container hero-content">
+
+            <div class="hero-text">
+
+                <span class="hero-tag"
+                      data-hi="🌱 भारतीय कृषि ज्ञान केंद्र"
+                      data-en="🌱 Indian Agriculture Knowledge Center">
+                    🌱 भारतीय कृषि ज्ञान केंद्र
+                </span>
+
+                <h1>
+                    <span data-hi="भारत की फसलों का"
+                          data-en="Explore Complete">
+                        भारत की फसलों का
+                    </span>
+
+                    <span class="highlight"
+                          data-hi="सम्पूर्ण ज्ञान"
+                          data-en="Crop Knowledge">
+                        सम्पूर्ण ज्ञान
+                    </span>
+                </h1>
+
+                <p data-hi="धान से लेकर गेहूँ, दलहन, तिलहन और बागवानी फसलों तक की पूरी जानकारी एक ही जगह प्राप्त करें।"
+                   data-en="Explore complete information about Indian cereal, pulse, oilseed, commercial and horticultural crops in one place.">
+
+                    धान से लेकर गेहूँ, दलहन, तिलहन और बागवानी
+                    फसलों तक की पूरी जानकारी एक ही जगह प्राप्त करें।
+
+                </p>
+
+                <a href="#crops" class="hero-btn">
+                    <span data-hi="फसलें देखें →"
+                          data-en="Explore Crops →">
+                        फसलें देखें →
+                    </span>
+                </a>
+
+            </div>
+
+            <div class="hero-image">
+                <div class="hero-image-card">
+                    <div class="hero-emoji">🌾</div>
+                    <h3 data-hi="कृषि ही जीवन है"
+                        data-en="Agriculture is Life">
+                        कृषि ही जीवन है
+                    </h3>
+                    <p data-hi="खेती का ज्ञान, किसान की पहचान"
+                       data-en="Knowledge of Farming, Identity of Farmers">
+                        खेती का ज्ञान, किसान की पहचान
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= STATISTICS ================= -->
+
+    <section class="statistics">
+
+        <div class="container stats-grid">
+
+            <div class="stat-card">
+                <span>🌾</span>
+                <h2 id="totalCrops">0</h2>
+                <p data-hi="कुल फसलें" data-en="Total Crops">
+                    कुल फसलें
+                </p>
+            </div>
+
+            <div class="stat-card">
+                <span>📚</span>
+                <h2 id="totalCategories">6</h2>
+                <p data-hi="फसल श्रेणियाँ"
+                   data-en="Crop Categories">
+                    फसल श्रेणियाँ
+                </p>
+            </div>
+
+            <div class="stat-card">
+                <span>🌐</span>
+                <h2>02</h2>
+                <p data-hi="भाषाएँ" data-en="Languages">
+                    भाषाएँ
+                </p>
+            </div>
+
+            <div class="stat-card">
+                <span>🔬</span>
+                <h2>09</h2>
+                <p data-hi="जानकारी के विषय"
+                   data-en="Information Fields">
+                    जानकारी के विषय
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CATEGORIES ================= -->
+
+    <section class="categories section" id="categories">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span data-hi="फसल वर्गीकरण"
+                      data-en="Crop Classification">
+                    फसल वर्गीकरण
+                </span>
+
+                <h2 data-hi="फसल की श्रेणियाँ"
+                    data-en="Crop Categories">
+                    फसल की श्रेणियाँ
+                </h2>
+
+                <p data-hi="अपनी पसंद की फसल श्रेणी चुनें।"
+                   data-en="Choose your preferred crop category.">
+                    अपनी पसंद की फसल श्रेणी चुनें।
+                </p>
+
+            </div>
+
+            <div class="category-grid" id="categoryGrid">
+
+                <!-- Categories will load using JavaScript -->
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ALL CROPS ================= -->
+
+    <section class="crops-section section" id="crops">
+
+        <div class="container">
+
+            <div class="section-heading">
+
+                <span data-hi="फसल जानकारी"
+                      data-en="Crop Information">
+                    फसल जानकारी
+                </span>
+
+                <h2 data-hi="सभी फसलों की जानकारी"
+                    data-en="Explore All Crops">
+                    सभी फसलों की जानकारी
+                </h2>
+
+                <p data-hi="किसी भी फसल को खोजें और उसकी सम्पूर्ण जानकारी प्राप्त करें।"
+                   data-en="Search any crop and discover its complete information.">
+
+                    किसी भी फसल को खोजें और उसकी सम्पूर्ण जानकारी प्राप्त करें।
+
+                </p>
+
+            </div>
+
+
+            <!-- SEARCH BAR -->
+
+            <div class="search-container">
+
+                <div class="search-box">
+
+                    <span>🔍</span>
+
+                    <input type="search"
+                           id="searchInput"
+                           placeholder="फसल का नाम खोजें...">
+
+                    <button id="searchBtn">
+                        <span data-hi="खोजें" data-en="Search">
+                            खोजें
+                        </span>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- CATEGORY FILTER -->
+
+            <div class="filter-container">
+
+                <button class="filter-btn active"
+                        data-category="all"
+                        data-hi="सभी फसलें"
+                        data-en="All Crops">
+                    सभी फसलें
+                </button>
+
+                <button class="filter-btn"
+                        data-category="cereal"
+                        data-hi="अनाज"
+                        data-en="Cereals">
+                    अनाज
+                </button>
+
+                <button class="filter-btn"
+                        data-category="pulse"
+                        data-hi="दलहन"
+                        data-en="Pulses">
+                    दलहन
+                </button>
+
+                <button class="filter-btn"
+                        data-category="oilseed"
+                        data-hi="तिलहन"
+                        data-en="Oilseeds">
+                    तिलहन
+                </button>
+
+                <button class="filter-btn"
+                        data-category="commercial"
+                        data-hi="व्यावसायिक"
+                        data-en="Commercial">
+                    व्यावसायिक
+                </button>
+
+                <button class="filter-btn"
+                        data-category="medicinal"
+                        data-hi="औषधीय"
+                        data-en="Medicinal">
+                    औषधीय
+                </button>
+
+                <button class="filter-btn"
+                        data-category="horticulture"
+                        data-hi="बागवानी"
+                        data-en="Horticulture">
+                    बागवानी
+                </button>
+
+            </div>
+
+
+            <!-- CROPS GRID -->
+
+            <div class="crop-grid" id="cropGrid">
+
+                <!-- Crop cards will load using JavaScript -->
+
+            </div>
+
+
+            <!-- NO RESULT MESSAGE -->
+
+            <div class="no-results" id="noResults"
+                 style="display: none;">
+
+                <div>🔍</div>
+
+                <h3 data-hi="कोई फसल नहीं मिली"
+                    data-en="No Crop Found">
+                    कोई फसल नहीं मिली
+                </h3>
+
+                <p data-hi="कृपया किसी दूसरे नाम से खोजें।"
+                   data-en="Please search using another name.">
+                    कृपया किसी दूसरे नाम से खोजें।
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CROP DETAILS MODAL ================= -->
+
+    <div class="modal" id="cropModal">
+
+        <div class="modal-content">
+
+            <button class="close-modal" id="closeModal"
+                    aria-label="Close details">
+                &times;
+            </button>
+
+            <div id="cropDetails">
+
+                <!-- Complete crop details will load here -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= ABOUT SECTION ================= -->
+
+    <section class="about-section section" id="about">
+
+        <div class="container about-content">
+
+            <div class="about-icon">
+                🌱
+            </div>
+
+            <div>
+
+                <span data-hi="हमारे बारे में"
+                      data-en="About Us">
+                    हमारे बारे में
+                </span>
+
+                <h2 data-hi="कृषि ज्ञान को सबके लिए आसान बनाना"
+                    data-en="Making Agricultural Knowledge Accessible">
+
+                    कृषि ज्ञान को सबके लिए आसान बनाना
+
+                </h2>
+
+                <p data-hi="यह पोर्टल विद्यार्थियों, किसानों और कृषि से जुड़े सभी लोगों के लिए बनाया गया है। यहाँ विभिन्न फसलों के वानस्पतिक नाम, रोग, कीट, जलवायु, तापमान, किस्में, उत्पत्ति स्थान और गुणसूत्र संख्या की जानकारी हिंदी और अंग्रेजी में मिलेगी।"
+
+                   data-en="This portal is designed for students, farmers and agriculture enthusiasts. It provides information about botanical names, diseases, pests, climate, temperature, varieties, origin and chromosome numbers of different crops in Hindi and English.">
+
+                    यह पोर्टल विद्यार्थियों, किसानों और कृषि से जुड़े
+                    सभी लोगों के लिए बनाया गया है। यहाँ विभिन्न फसलों के
+                    वानस्पतिक नाम, रोग, कीट, जलवायु, तापमान, किस्में,
+                    उत्पत्ति स्थान और गुणसूत्र संख्या की जानकारी
+                    हिंदी और अंग्रेजी में मिलेगी।
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer class="footer">
+
+        <div class="container footer-content">
+
+            <div class="footer-logo">
+
+                🌾 CropKnowledge
+
+                <p data-hi="भारतीय कृषि का सम्पूर्ण ज्ञान"
+                   data-en="Complete Knowledge of Indian Agriculture">
+
+                    भारतीय कृषि का सम्पूर्ण ज्ञान
+
+                </p>
+
+            </div>
+
+            <div class="footer-links">
+
+                <a href="#home"
+                   data-hi="होम"
+                   data-en="Home">होम</a>
+
+                <a href="#categories"
+                   data-hi="श्रेणियाँ"
+                   data-en="Categories">श्रेणियाँ</a>
+
+                <a href="#crops"
+                   data-hi="फसलें"
+                   data-en="Crops">फसलें</a>
+
+                <a href="#about"
+                   data-hi="जानकारी"
+                   data-en="About">जानकारी</a>
+
+            </div>
+
+        </div>
+
+        <div class="copyright">
+
+            © <span id="currentYear"></span>
+            CropKnowledge. All Rights Reserved.
+
+            <p data-hi="शिक्षा और कृषि ज्ञान के लिए बनाया गया ❤️"
+               data-en="Made for Education and Agricultural Knowledge ❤️">
+
+                शिक्षा और कृषि ज्ञान के लिए बनाया गया ❤️
+
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT FILES ================= -->
+
+    <script src="crops.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
