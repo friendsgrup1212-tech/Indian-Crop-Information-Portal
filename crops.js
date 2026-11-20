@@ -1,481 +1,524 @@
-const cropsData = [
-    // 1. CEREAL / UDYAN CROPS (खाद्यान्न फसलें)
-    {
-        category: 'cereal',
-        catName: { hi: 'खाद्यान्न फसल', en: 'Cereal Crop' },
-        name: { hi: 'धान (Paddy/Rice)', en: 'Paddy / Rice' },
-        bn: 'Oryza sativa',
-        chromosome: '2n = 24',
-        origin: { hi: 'दक्षिण-पूर्व एशिया (भारत-बर्मा)', en: 'South-East Asia (Indo-Burma)' },
-        climate: { hi: 'गर्म एवं आर्द्र (उष्णकटिबंधीय)', en: 'Hot and Humid (Tropical)' },
-        temp: { hi: '21°C - 37°C', en: '21°C - 37°C' },
-        varieties: { hi: 'पूसा बासमती-1, IR-64, जया, रत्ना, स्वर्णा', en: 'Pusa Basmati-1, IR-64, Jaya, Ratna, Swarna' },
-        diseases: { hi: 'खैरा रोग (Zn की कमी), झुलसा (Blast), जीवाणु पत्ती अंगमारी', en: 'Khaira (Zn deficiency), Blast, Bacterial Leaf Blight' },
-        pests: { hi: 'तना छेदक, गंधी बग, भूरा फुदका (BPH)', en: 'Stem Borer, Gundhi Bug, Brown Plant Hopper' }
-    },
-    {
-        category: 'cereal',
-        catName: { hi: 'खाद्यान्न फसल', en: 'Cereal Crop' },
-        name: { hi: 'गेहूँ (Wheat)', en: 'Wheat' },
-        bn: 'Triticum aestivum',
-        chromosome: '2n = 42 (Hexaploid)',
-        origin: { hi: 'दक्षिण-पश्चिम एशिया (तुर्की)', en: 'South-West Asia (Turkey)' },
-        climate: { hi: 'शीतोष्ण एवं शुष्क (रबी)', en: 'Temperate and Dry (Rabi)' },
-        temp: { hi: '15°C - 25°C', en: '15°C - 25°C' },
-        varieties: { hi: 'HD-2967, लोक-1, सोनालिका, कल्याण सोना, DBW-187', en: 'HD-2967, Lok-1, Sonalika, Kalyan Sona, DBW-187' },
-        diseases: { hi: 'गेरुआ (काला, भूरा, पीला रतुआ), करनाल बंट, अनावृत कंडवा', en: 'Rust (Black, Brown, Yellow), Karnal Bunt, Loose Smut' },
-        pests: { hi: 'दीमक, माहू (Aphid), गुझिया वीविल', en: 'Termite, Aphid, Gujhia Weevil' }
-    },
-    {
-        category: 'cereal',
-        catName: { hi: 'खाद्यान्न फसल', en: 'Cereal Crop' },
-        name: { hi: 'मक्का (Maize)', en: 'Maize' },
-        bn: 'Zea mays',
-        chromosome: '2n = 20',
-        origin: { hi: 'मध्य अमेरिका (मेक्सिको)', en: 'Central America (Mexico)' },
-        climate: { hi: 'उष्ण एवं उपोष्णकटिबंधीय', en: 'Tropical and Sub-tropical' },
-        temp: { hi: '21°C - 30°C', en: '21°C - 30°C' },
-        varieties: { hi: 'गंगा-5, शक्तिमान-1, विक्रम, पूसा विवेक', en: 'Ganga-5, Shaktiman-1, Vikram, Pusa Vivek' },
-        diseases: { hi: 'पत्ती झुलसा, तुलासिता (Downy Mildew), तना सड़न', en: 'Leaf Blight, Downy Mildew, Stalk Rot' },
-        pests: { hi: 'तना छेदक (Chilo partellus), फॉल आर्मीवर्म', en: 'Stem Borer, Fall Armyworm' }
-    },
-    {
-        category: 'cereal',
-        catName: { hi: 'खाद्यान्न फसल', en: 'Cereal Crop' },
-        name: { hi: 'ज्वार (Sorghum)', en: 'Sorghum' },
-        bn: 'Sorghum bicolor',
-        chromosome: '2n = 20',
-        origin: { hi: 'अफ्रीका (इथियोपिया)', en: 'Africa (Ethiopia)' },
-        climate: { hi: 'गर्म एवं अर्ध-शुष्क', en: 'Warm and Semi-arid' },
-        temp: { hi: '26°C - 32°C', en: '26°C - 32°C' },
-        varieties: { hi: 'CSH-1, CSH-9, CSV-15, पूसा चरी', en: 'CSH-1, CSH-9, CSV-15, Pusa Chari' },
-        diseases: { hi: 'कंडवा (Grain Smut), एन्थ्रेक्नोज, अर्गट', en: 'Grain Smut, Anthracnose, Ergot' },
-        pests: { hi: 'प्ररोह मक्खी (Shoot Fly), तना छेदक', en: 'Shoot Fly, Stem Borer' }
-    },
-    {
-        category: 'cereal',
-        catName: { hi: 'खाद्यान्न फसल', en: 'Cereal Crop' },
-        name: { hi: 'बाजरा (Pearl Millet)', en: 'Pearl Millet' },
-        bn: 'Pennisetum glaucum',
-        chromosome: '2n = 14',
-        origin: { hi: 'पश्चिम अफ्रीका', en: 'West Africa' },
-        climate: { hi: 'गर्म एवं शुष्क (सूखा सहिष्णु)', en: 'Hot and Dry (Drought tolerant)' },
-        temp: { hi: '25°C - 35°C', en: '25°C - 35°C' },
-        varieties: { hi: 'HHB-67, पूसा मोती, राज-171, ICMH-451', en: 'HHB-67, Pusa Moti, Raj-171, ICMH-451' },
-        diseases: { hi: 'हरित बाली रोग (Green Ear), अर्गट, कंडवा', en: 'Green Ear Disease, Ergot, Smut' },
-        pests: { hi: 'सफेद लट (White Grub), टिड्डा', en: 'White Grub, Grasshopper' }
-    },
-    {
-        category: 'cereal',
-        catName: { hi: 'खाद्यान्न फसल', en: 'Cereal Crop' },
-        name: { hi: 'जौ (Barley)', en: 'Barley' },
-        bn: 'Hordeum vulgare',
-        chromosome: '2n = 14',
-        origin: { hi: 'इथियोपिया एवं दक्षिण-पूर्व एशिया', en: 'Ethiopia & South-East Asia' },
-        climate: { hi: 'शीत एवं शुष्क', en: 'Cool and Dry' },
-        temp: { hi: '12°C - 22°C', en: '12°C - 22°C' },
-        varieties: { hi: 'ज्योति, रत्ना, RD-2552, डोलमा', en: 'Jyoti, Ratna, RD-2552, Dolma' },
-        diseases: { hi: 'आवृत कंडवा (Covered Smut), धारीदार रोग, रतुआ', en: 'Covered Smut, Stripe Disease, Rust' },
-        pests: { hi: 'माहू (Aphid), दीमक', en: 'Aphid, Termite' }
-    },
 
-    // 2. PULSE CROPS (दलहनी फसलें)
-    {
-        category: 'pulse',
-        catName: { hi: 'दलहनी फसल', en: 'Pulse Crop' },
-        name: { hi: 'चना (Chickpea)', en: 'Chickpea' },
-        bn: 'Cicer arietinum',
-        chromosome: '2n = 14, 16',
-        origin: { hi: 'दक्षिण-पश्चिम एशिया', en: 'South-West Asia' },
-        climate: { hi: 'शीतोष्ण एवं शुष्क', en: 'Temperate and Dry' },
-        temp: { hi: '15°C - 25°C', en: '15°C - 25°C' },
-        varieties: { hi: 'पूसा-256, अवरोधी, विशाल, काबुली-1', en: 'Pusa-256, Avrodhi, Vishal, Kabuli-1' },
-        diseases: { hi: 'उकठा रोग (Wilt), एस्कोकाइटा अंगमारी', en: 'Fusarium Wilt, Ascochyta Blight' },
-        pests: { hi: 'फली छेदक (Helicoverpa armigera), कटुआ कीट', en: 'Pod Borer, Cutworm' }
-    },
-    {
-        category: 'pulse',
-        catName: { hi: 'दलहनी फसल', en: 'Pulse Crop' },
-        name: { hi: 'अरहर (Pigeon Pea)', en: 'Pigeon Pea' },
-        bn: 'Cajanus cajan',
-        chromosome: '2n = 22',
-        origin: { hi: 'अफ्रीका / भारत', en: 'Africa / India' },
-        climate: { hi: 'गर्म एवं आर्द्र (उष्णकटिबंधीय)', en: 'Warm and Humid (Tropical)' },
-        temp: { hi: '20°C - 30°C', en: '20°C - 30°C' },
-        varieties: { hi: 'UPAS-120, प्रभात, बहार, मालवीय चमत्कार', en: 'UPAS-120, Prabhat, Bahar, Malviya Chamatkar' },
-        diseases: { hi: 'उकठा रोग (Wilt), बांझपन मोजेक (Sterility Mosaic)', en: 'Wilt, Sterility Mosaic' },
-        pests: { hi: 'फली मक्खी, फली छेदक, प्लम मॉथ', en: 'Pod Fly, Pod Borer, Plume Moth' }
-    },
-    {
-        category: 'pulse',
-        catName: { hi: 'दलहनी फसल', en: 'Pulse Crop' },
-        name: { hi: 'मूंग (Green Gram)', en: 'Green Gram' },
-        bn: 'Vigna radiata',
-        chromosome: '2n = 22',
-        origin: { hi: 'भारत', en: 'India' },
-        climate: { hi: 'गर्म एवं अर्ध-शुष्क', en: 'Hot and Semi-arid' },
-        temp: { hi: '25°C - 35°C', en: '25°C - 35°C' },
-        varieties: { hi: 'पूसा बैसाखी, सम्राट, विराट, टाइप-44', en: 'Pusa Baisakhi, Samrat, Virat, Type-44' },
-        diseases: { hi: 'पीला मोजेक वायरस (YMV), चूर्णिल आसिता', en: 'Yellow Mosaic Virus (YMV), Powdery Mildew' },
-        pests: { hi: 'सफेद मक्खी (Whitefly), फली छेदक', en: 'Whitefly, Pod Borer' }
-    },
-    {
-        category: 'pulse',
-        catName: { hi: 'दलहनी फसल', en: 'Pulse Crop' },
-        name: { hi: 'उड़द (Black Gram)', en: 'Black Gram' },
-        bn: 'Vigna mungo',
-        chromosome: '2n = 22',
-        origin: { hi: 'भारत', en: 'India' },
-        climate: { hi: 'गर्म एवं आर्द्र', en: 'Warm and Humid' },
-        temp: { hi: '25°C - 35°C', en: '25°C - 35°C' },
-        varieties: { hi: 'पंत उड़द-31, टी-9, शेखर-2, उत्तरा', en: 'Pant Urd-31, T-9, Shekhar-2, Uttara' },
-        diseases: { hi: 'पीला मोजेक, पत्ती धब्बा (Cercospora)', en: 'Yellow Mosaic, Cercospora Leaf Spot' },
-        pests: { hi: 'सफेद मक्खी, जैसिड (हरा फुदका)', en: 'Whitefly, Jassids' }
-    },
-    {
-        category: 'pulse',
-        catName: { hi: 'दलहनी फसल', en: 'Pulse Crop' },
-        name: { hi: 'मसूर (Lentil)', en: 'Lentil' },
-        bn: 'Lens culinaris',
-        chromosome: '2n = 14',
-        origin: { hi: 'मिस्र / दक्षिण-पश्चिम एशिया', en: 'Egypt / South-West Asia' },
-        climate: { hi: 'ठंडी एवं शुष्क (रबी)', en: 'Cool and Dry (Rabi)' },
-        temp: { hi: '15°C - 25°C', en: '15°C - 25°C' },
-        varieties: { hi: 'पंत मसूर-5, शिवालिक, मल्लिका, गरिमा', en: 'Pant Masoor-5, Shivalik, Mallika, Garima' },
-        diseases: { hi: 'रतुआ (Rust), उकठा (Wilt)', en: 'Rust, Wilt' },
-        pests: { hi: 'माहू (Aphid), फली छेदक', en: 'Aphid, Pod Borer' }
-    },
+// ==========================================
+// 1. HORTICULTURE CATEGORY NAMES
+// ==========================================
 
-    // 3. OILSEED CROPS (तिलहनी फसलें)
-    {
-        category: 'oilseed',
-        catName: { hi: 'तिलहनी फसल', en: 'Oilseed Crop' },
-        name: { hi: 'सोयाबीन (Soybean)', en: 'Soybean' },
-        bn: 'Glycine max',
-        chromosome: '2n = 40',
-        origin: { hi: 'चीन', en: 'China' },
-        climate: { hi: 'गर्म एवं नम', en: 'Warm and Moist' },
-        temp: { hi: '25°C - 30°C', en: '25°C - 30°C' },
-        varieties: { hi: 'JS-335, JS-95-60, अहिल्या, इंदिरा सोया-9', en: 'JS-335, JS-95-60, Ahilya, Indira Soya-9' },
-        diseases: { hi: 'पीला मोजेक, चारकोल सड़न, बैक्टीरियल पस्ट्यूल', en: 'Yellow Mosaic, Charcoal Rot, Bacterial Pustule' },
-        pests: { hi: 'गर्डल बीटल (Girdle Beetle), बिहार रोमिल सुंडी', en: 'Girdle Beetle, Bihar Hairy Caterpillar' }
-    },
-    {
-        category: 'oilseed',
-        catName: { hi: 'तिलहनी फसल', en: 'Oilseed Crop' },
-        name: { hi: 'सरसों (Mustard)', en: 'Mustard' },
-        bn: 'Brassica juncea',
-        chromosome: '2n = 36',
-        origin: { hi: 'चीन / भारत', en: 'China / India' },
-        climate: { hi: 'शीतोष्ण एवं शुष्क', en: 'Temperate and Dry' },
-        temp: { hi: '15°C - 25°C', en: '15°C - 25°C' },
-        varieties: { hi: 'पूसा बोल्ड, वरुणा (T-59), क्रांति, गिरिराज', en: 'Pusa Bold, Varuna (T-59), Kranti, Giriraj' },
-        diseases: { hi: 'सफेद रतुआ (White Rust), अल्टरनेरिया अंगमारी', en: 'White Rust, Alternaria Blight' },
-        pests: { hi: 'चेपा/माहू (Mustard Aphid), आरा मक्खी', en: 'Mustard Aphid, Sawfly' }
-    },
-    {
-        category: 'oilseed',
-        catName: { hi: 'तिलहनी फसल', en: 'Oilseed Crop' },
-        name: { hi: 'सूरजमुखी (Sunflower)', en: 'Sunflower' },
-        bn: 'Helianthus annuus',
-        chromosome: '2n = 34',
-        origin: { hi: 'उत्तरी अमेरिका (मेक्सिको)', en: 'North America (Mexico)' },
-        climate: { hi: 'समशीतोष्ण एवं उष्ण (प्रकाश निष्प्रभावी)', en: 'Temperate & Tropical (Photo-insensitive)' },
-        temp: { hi: '20°C - 28°C', en: '20°C - 28°C' },
-        varieties: { hi: 'मॉडर्न, ज्वालामुखी, KBSH-1, सूर्या', en: 'Morden, Jwalamukhi, KBSH-1, Surya' },
-        diseases: { hi: 'सिर सड़न (Head Rot), अल्टरनेरिया झुलसा', en: 'Head Rot, Alternaria Blight' },
-        pests: { hi: 'हरा फुदका, तंबाकू सुंडी', en: 'Leafhopper, Tobacco Caterpillar' }
-    },
-    {
-        category: 'oilseed',
-        catName: { hi: 'तिलहनी फसल', en: 'Oilseed Crop' },
-        name: { hi: 'मूंगफली (Groundnut)', en: 'Groundnut' },
-        bn: 'Arachis hypogaea',
-        chromosome: '2n = 40',
-        origin: { hi: 'दक्षिण अमेरिका (ब्राजील)', en: 'South America (Brazil)' },
-        climate: { hi: 'गर्म एवं अर्ध-शुष्क', en: 'Warm and Semi-arid' },
-        temp: { hi: '25°C - 30°C', en: '25°C - 30°C' },
-        varieties: { hi: 'ज्योति, गिरनार-2, कौशल, चंद्रा', en: 'Jyoti, Girnar-2, Kaushal, Chandra' },
-        diseases: { hi: 'टिक्का रोग (Tikka Leaf Spot), कॉलर सड़न, रोजेट वायरस', en: 'Tikka Disease, Collar Rot, Rosette Virus' },
-        pests: { hi: 'सफेद लट (White Grub), पत्ती सुरंगक', en: 'White Grub, Leaf Miner' }
-    },
-    {
-        category: 'oilseed',
-        catName: { hi: 'तिलहनी फसल', en: 'Oilseed Crop' },
-        name: { hi: 'तिल (Sesame)', en: 'Sesame' },
-        bn: 'Sesamum indicum',
-        chromosome: '2n = 26',
-        origin: { hi: 'दक्षिण-पश्चिम अफ्रीका / भारत', en: 'South-West Africa / India' },
-        climate: { hi: 'गर्म एवं शुष्क', en: 'Hot and Dry' },
-        temp: { hi: '25°C - 35°C', en: '25°C - 35°C' },
-        varieties: { hi: 'प्रगति, शेखर, टी-4, आरटी-351', en: 'Pragati, Shekhar, T-4, RT-351' },
-        diseases: { hi: 'फिलोडी (Phyllody - माइकोप्लाज्मा), पत्ती धब्बा', en: 'Phyllody, Leaf Spot' },
-        pests: { hi: 'फली एवं पत्ती लपेटक (Leaf Webber)', en: 'Leaf Webber and Capsule Borer' }
-    },
-    {
-        category: 'oilseed',
-        catName: { hi: 'तिलहनी फसल', en: 'Oilseed Crop' },
-        name: { hi: 'अलसी (Linseed)', en: 'Linseed' },
-        bn: 'Linum usitatissimum',
-        chromosome: '2n = 30',
-        origin: { hi: 'भूमध्यसागरीय क्षेत्र', en: 'Mediterranean Region' },
-        climate: { hi: 'शीत एवं शुष्क (रबी)', en: 'Cool and Dry (Rabi)' },
-        temp: { hi: '15°C - 22°C', en: '15°C - 22°C' },
-        varieties: { hi: 'नीलम, गरिमा, श्वेता, पार्वती', en: 'Neelam, Garima, Shweta, Parvati' },
-        diseases: { hi: 'रतुआ (Rust), उकठा (Wilt), चूर्णिल आसिता', en: 'Rust, Wilt, Powdery Mildew' },
-        pests: { hi: 'कल्ली मक्खी (Bud Fly)', en: 'Linseed Bud Fly' }
-    },
+const horticultureCategories = {
+    fruit: { hi: 'फल वाली फसल', en: 'Fruit Crop' },
+    vegetable: { hi: 'सब्जी वाली फसल', en: 'Vegetable Crop' },
+    flower: { hi: 'फूल वाली फसल', en: 'Flower Crop' },
+    spice: { hi: 'मसाले वाली फसल', en: 'Spice Crop' },
+    plantation: { hi: 'बागान वाली फसल', en: 'Plantation Crop' },
+    medicinal: { hi: 'औषधीय फसल', en: 'Medicinal Crop' }
+};
 
-    // 4. COMMERCIAL CROPS (व्यावसायिक फसलें)
-    {
-        category: 'commercial',
-        catName: { hi: 'व्यावसायिक फसल', en: 'Commercial Crop' },
-        name: { hi: 'गन्ना (Sugarcane)', en: 'Sugarcane' },
-        bn: 'Saccharum officinarum',
-        chromosome: '2n = 80',
-        origin: { hi: 'न्यू गिनी / भारत', en: 'New Guinea / India' },
-        climate: { hi: 'उष्ण एवं उपोष्णकटिबंधीय', en: 'Tropical and Sub-tropical' },
-        temp: { hi: '25°C - 32°C', en: '25°C - 32°C' },
-        varieties: { hi: 'Co-0238, CoS-767, CoJ-64, कोlk-94184', en: 'Co-0238, CoS-767, CoJ-64, CoLk-94184' },
-        diseases: { hi: 'लाल सड़न (Red Rot), कंडवा (Smut), ग्रासी शूट', en: 'Red Rot, Smut, Grassy Shoot' },
-        pests: { hi: 'चोटी छेदक (Top Borer), पायरिला, सफेद मक्खी', en: 'Top Borer, Pyrilla, Whitefly' }
-    },
-    {
-        category: 'commercial',
-        catName: { hi: 'व्यावसायिक फसल', en: 'Commercial Crop' },
-        name: { hi: 'कपास (Cotton)', en: 'Cotton' },
-        bn: 'Gossypium hirsutum',
-        chromosome: '2n = 52 (Tetraploid)',
-        origin: { hi: 'भारत एवं मध्य अमेरिका', en: 'India & Central America' },
-        climate: { hi: 'गर्म एवं अर्ध-शुष्क (पाला रहित)', en: 'Warm and Semi-arid (Frost-free)' },
-        temp: { hi: '21°C - 30°C', en: '21°C - 30°C' },
-        varieties: { hi: 'H-4 (पहली संकर), सुविन, वरलक्ष्मी, बीटी कॉटन', en: 'H-4 (First Hybrid), Suvin, Varalaxmi, Bt Cotton' },
-        diseases: { hi: 'ब्लैक आर्म (जीवाणु अंगमारी), उकठा, पत्ती मोड़क', en: 'Black Arm (Bacterial Blight), Wilt, Leaf Curl' },
-        pests: { hi: 'गुलाबी सुंडी (Pink Bollworm), सफेद मक्खी, जैसिड', en: 'Pink Bollworm, Whitefly, Jassid' }
-    },
-    {
-        category: 'commercial',
-        catName: { hi: 'व्यावसायिक फसल', en: 'Commercial Crop' },
-        name: { hi: 'जूट (Jute)', en: 'Jute' },
-        bn: 'Corchorus capsularis',
-        chromosome: '2n = 14',
-        origin: { hi: 'भारत-बर्मा क्षेत्र', en: 'Indo-Burma Region' },
-        climate: { hi: 'अत्यधिक गर्म एवं आर्द्र', en: 'Hot and Very Humid' },
-        temp: { hi: '24°C - 35°C', en: '24°C - 35°C' },
-        varieties: { hi: 'JRO-524 (नवीन), JRC-212, सोनाली', en: 'JRO-524 (Navin), JRC-212, Sonali' },
-        diseases: { hi: 'तना सड़न (Stem Rot), जड़ सड़न', en: 'Stem Rot, Root Rot' },
-        pests: { hi: 'जूट सेमीलूपर, बिहार रोमिल सुंडी', en: 'Jute Semilooper, Bihar Hairy Caterpillar' }
-    },
-    {
-        category: 'commercial',
-        catName: { hi: 'व्यावसायिक फसल', en: 'Commercial Crop' },
-        name: { hi: 'आलू (Potato)', en: 'Potato' },
-        bn: 'Solanum tuberosum',
-        chromosome: '2n = 48',
-        origin: { hi: 'दक्षिण अमेरिका (पेरू)', en: 'South America (Peru)' },
-        climate: { hi: 'शीतोष्ण एवं ठंडा', en: 'Temperate and Cool' },
-        temp: { hi: '15°C - 20°C (कंद निर्माण हेतु)', en: '15°C - 20°C (for tuberization)' },
-        varieties: { hi: 'कुफरी ज्योति, कुफरी चंद्रमुखी, कुफरी चिप्सोना-1', en: 'Kufri Jyoti, Kufri Chandramukhi, Kufri Chipsona-1' },
-        diseases: { hi: 'पछेती झुलसा (Late Blight), अगेती झुलसा, ब्लैक हार्ट', en: 'Late Blight, Early Blight, Black Heart' },
-        pests: { hi: 'आलू कंद शलभ (Tuber Moth), माहू (Aphid)', en: 'Potato Tuber Moth, Aphid' }
-    },
-    {
-        category: 'commercial',
-        catName: { hi: 'व्यावसायिक फसल', en: 'Commercial Crop' },
-        name: { hi: 'तम्बाकू (Tobacco)', en: 'Tobacco' },
-        bn: 'Nicotiana tabacum',
-        chromosome: '2n = 48',
-        origin: { hi: 'दक्षिण अमेरिका', en: 'South America' },
-        climate: { hi: 'उष्ण एवं उपोष्णकटिबंधीय', en: 'Tropical and Sub-tropical' },
-        temp: { hi: '20°C - 27°C', en: '20°C - 27°C' },
-        varieties: { hi: 'आनंद-2, कंचन, जयश्री, भवानी स्पेशल', en: 'Anand-2, Kanchan, Jayasri, Bhavani Special' },
-        diseases: { hi: 'टोबैको मोजेक वायरस (TMV), आर्द्र गलन (Damping Off)', en: 'Tobacco Mosaic Virus (TMV), Damping Off' },
-        pests: { hi: 'तंबाकू सुंडी (Spodoptera litura), माहू', en: 'Tobacco Caterpillar, Aphid' }
-    },
+// ==========================================
+// 2. OLD CROPS CATEGORY UPDATE
+// ==========================================
 
-    // 5. MEDICINAL CROPS (औषधीय फसलें)
-    {
-        category: 'medicinal',
-        catName: { hi: 'औषधीय फसल', en: 'Medicinal Crop' },
-        name: { hi: 'मशरूम (Mushroom)', en: 'Mushroom' },
-        bn: 'Agaricus bisporus (Button)',
-        chromosome: 'n = 12 (Haploid nuclei)',
-        origin: { hi: 'यूरोप (फ्रांस)', en: 'Europe (France)' },
-        climate: { hi: 'नियंत्रित आर्द्र एवं ठंडा (इनडोर)', en: 'Controlled Humid and Cool (Indoor)' },
-        temp: { hi: '14°C - 18°C (फलन हेतु)', en: '14°C - 18°C (for fruiting)' },
-        varieties: { hi: 'सफेद बटन, ढींगरी (Oyster), दूधिया (Milky)', en: 'White Button, Oyster, Milky Mushroom' },
-        diseases: { hi: 'ग्रीन मोल्ड, ड्राई बबल, वेट बबल', en: 'Green Mold, Dry Bubble, Wet Bubble' },
-        pests: { hi: 'फोरिड मक्खी, सियारिड मक्खी, माइट्स', en: 'Phorid Fly, Sciarid Fly, Mites' }
-    },
-    {
-        category: 'medicinal',
-        catName: { hi: 'औषधीय फसल', en: 'Medicinal Crop' },
-        name: { hi: 'पुदीना (Mint / Mentha)', en: 'Mint / Mentha' },
-        bn: 'Mentha arvensis',
-        chromosome: '2n = 96',
-        origin: { hi: 'भूमध्यसागरीय क्षेत्र / जापान', en: 'Mediterranean Region / Japan' },
-        climate: { hi: 'उपोष्णकटिबंधीय एवं समशीतोष्ण', en: 'Sub-tropical and Temperate' },
-        temp: { hi: '20°C - 30°C', en: '20°C - 30°C' },
-        varieties: { hi: 'कोसी, हिमालय, शिवालिक, गोमती', en: 'Kosi, Himalaya, Shivalik, Gomti' },
-        diseases: { hi: 'रतुआ (Rust), चूर्णिल आसिता, स्टोलन सड़न', en: 'Rust, Powdery Mildew, Stolon Rot' },
-        pests: { hi: 'रोमिल सुंडी, पत्ती लपेटक', en: 'Hairy Caterpillar, Leaf Roller' }
-    },
-    {
-        category: 'medicinal',
-        catName: { hi: 'औषधीय फसल', en: 'Medicinal Crop' },
-        name: { hi: 'तुलसी (Holy Basil)', en: 'Holy Basil (Tulsi)' },
-        bn: 'Ocimum tenuiflorum',
-        chromosome: '2n = 32, 36',
-        origin: { hi: 'भारत', en: 'India' },
-        climate: { hi: 'उष्ण एवं उपोष्णकटिबंधीय', en: 'Tropical and Sub-tropical' },
-        temp: { hi: '20°C - 35°C', en: '20°C - 35°C' },
-        varieties: { hi: 'सिम-सौम्या, रामा तुलसी, श्यामा तुलसी', en: 'CIM-Saumya, Rama Tulsi, Shyama Tulsi' },
-        diseases: { hi: 'चूर्णिल आसिता, जड़ सड़न (Root Rot)', en: 'Powdery Mildew, Root Rot' },
-        pests: { hi: 'पत्ती लपेटक (Leaf Folder), सफेद मक्खी', en: 'Leaf Folder, Whitefly' }
-    },
+const categoryUpdate = {
+    'Mango': 'fruit',
+    'Banana': 'fruit',
+    'Apple': 'fruit',
 
-    // 6. HORTICULTURE CROPS (बागवानी फसलें)
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (फल)', en: 'Horticulture (Fruit)' },
-        name: { hi: 'आम (Mango)', en: 'Mango' },
-        bn: 'Mangifera indica',
-        chromosome: '2n = 40',
-        origin: { hi: 'भारत-बर्मा क्षेत्र', en: 'Indo-Burma Region' },
-        climate: { hi: 'उष्ण एवं उपोष्णकटिबंधीय', en: 'Tropical and Sub-tropical' },
-        temp: { hi: '24°C - 30°C', en: '24°C - 30°C' },
-        varieties: { hi: 'अल्फांसो, दशहरी, लंगड़ा, आम्रपाली, मल्लिका', en: 'Alphonso, Dasheri, Langra, Amrapali, Mallika' },
-        diseases: { hi: 'गुच्छा रोग (Malformation), चूर्णिल आसिता, ब्लैक टिप', en: 'Mango Malformation, Powdery Mildew, Black Tip' },
-        pests: { hi: 'आम का फुदका (Hopper), मिली बग, फल मक्खी', en: 'Mango Hopper, Mealy Bug, Fruit Fly' }
-    },
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (फल)', en: 'Horticulture (Fruit)' },
-        name: { hi: 'केला (Banana)', en: 'Banana' },
-        bn: 'Musa paradisiaca',
-        chromosome: '2n = 33 (Triploid)',
-        origin: { hi: 'दक्षिण-पूर्व एशिया', en: 'South-East Asia' },
-        climate: { hi: 'गर्म एवं आर्द्र (उष्णकटिबंधीय)', en: 'Warm and Humid (Tropical)' },
-        temp: { hi: '20°C - 35°C', en: '20°C - 35°C' },
-        varieties: { hi: 'ग्रैंड नैन (G-9), रोबस्टा, पूवन, ड्वार्फ कैवेंडिश', en: 'Grand Naine (G-9), Robusta, Poovan, Dwarf Cavendish' },
-        diseases: { hi: 'पनामा विल्ट, सिगाटोका पत्ती धब्बा, बंची टॉप', en: 'Panama Wilt, Sigatoka Leaf Spot, Bunchy Top' },
-        pests: { hi: 'प्रकंद घुन (Rhizome Weevil), माहू', en: 'Rhizome Weevil, Aphid' }
-    },
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (फल)', en: 'Horticulture (Fruit)' },
-        name: { hi: 'सेब (Apple)', en: 'Apple' },
-        bn: 'Malus domestica',
-        chromosome: '2n = 34',
-        origin: { hi: 'मध्य एशिया (कजाकिस्तान)', en: 'Central Asia (Kazakhstan)' },
-        climate: { hi: 'शीतोष्ण (ठंडी जलवायु)', en: 'Temperate (Cold Climate)' },
-        temp: { hi: '15°C - 21°C (फलन), <7°C चिलिंग', en: '15°C - 21°C (fruiting), <7°C chilling' },
-        varieties: { hi: 'रॉयल डिलीशियस, रेड डिलीशियस, गोल्डन डिलीशियस', en: 'Royal Delicious, Red Delicious, Golden Delicious' },
-        diseases: { hi: 'एप्पल स्कैब (Scab), फायर ब्लाइट, चूर्णिल आसिता', en: 'Apple Scab, Fire Blight, Powdery Mildew' },
-        pests: { hi: 'वूली एप्पल एफिड, सैन जोस स्केल, कॉडलिंग मॉथ', en: 'Woolly Apple Aphid, San Jose Scale, Codling Moth' }
-    },
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (सब्जी)', en: 'Horticulture (Vegetable)' },
-        name: { hi: 'टमाटर (Tomato)', en: 'Tomato' },
-        bn: 'Solanum lycopersicum',
-        chromosome: '2n = 24',
-        origin: { hi: 'दक्षिण अमेरिका (पेरू)', en: 'South America (Peru)' },
-        climate: { hi: 'गर्म एवं समशीतोष्ण', en: 'Warm and Temperate' },
-        temp: { hi: '20°C - 25°C', en: '20°C - 25°C' },
-        varieties: { hi: 'पूसा रूबी, अर्का रक्षक, अर्का विकास, रोमा', en: 'Pusa Ruby, Arka Rakshak, Arka Vikas, Roma' },
-        diseases: { hi: 'पत्ती मोड़क (Leaf Curl), अगेती व पछेती झुलसा', en: 'Leaf Curl Virus, Early & Late Blight' },
-        pests: { hi: 'फल छेदक (Fruit Borer), सफेद मक्खी', en: 'Fruit Borer, Whitefly' }
-    },
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (सब्जी)', en: 'Horticulture (Vegetable)' },
-        name: { hi: 'प्याज (Onion)', en: 'Onion' },
-        bn: 'Allium cepa',
-        chromosome: '2n = 16',
-        origin: { hi: 'मध्य एशिया', en: 'Central Asia' },
-        climate: { hi: 'शीतोष्ण एवं हल्का गर्म', en: 'Temperate and Mild Warm' },
-        temp: { hi: '15°C - 25°C', en: '15°C - 25°C' },
-        varieties: { hi: 'पूसा रेड, नासिक रेड (N-53), एग्रीफाउंड डार्क रेड', en: 'Pusa Red, Nasik Red (N-53), Agrifound Dark Red' },
-        diseases: { hi: 'बैंगनी धब्बा (Purple Blotch), मृदुरोमिल आसिता', en: 'Purple Blotch, Downy Mildew' },
-        pests: { hi: 'थ्रिप्स (Thrips), प्याज की मक्खी', en: 'Onion Thrips, Onion Maggot' }
-    },
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (सब्जी/मसाला)', en: 'Horticulture (Spice)' },
-        name: { hi: 'मिर्च (Chilli)', en: 'Chilli' },
-        bn: 'Capsicum annuum',
-        chromosome: '2n = 24',
-        origin: { hi: 'मेक्सिको (दक्षिण अमेरिका)', en: 'Mexico (South America)' },
-        climate: { hi: 'गर्म एवं आर्द्र', en: 'Warm and Humid' },
-        temp: { hi: '20°C - 30°C', en: '20°C - 30°C' },
-        varieties: { hi: 'पूसा ज्वाला, भाग्यलक्ष्मी, काशी अनमोल', en: 'Pusa Jwala, Bhagyalakshmi, Kashi Anmol' },
-        diseases: { hi: 'पत्ती मोड़क (Leaf Curl), एन्थ्रेक्नोज (डाईबैक)', en: 'Leaf Curl, Anthracnose (Die-back)' },
-        pests: { hi: 'थ्रिप्स, माइट्स (Mites), सफेद मक्खी', en: 'Thrips, Mites, Whitefly' }
-    },
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (मसाला)', en: 'Horticulture (Spice)' },
-        name: { hi: 'हल्दी (Turmeric)', en: 'Turmeric' },
-        bn: 'Curcuma longa',
-        chromosome: '2n = 63 (Triploid)',
-        origin: { hi: 'दक्षिण-पूर्व एशिया (भारत)', en: 'South-East Asia (India)' },
-        climate: { hi: 'गर्म एवं आर्द्र', en: 'Hot and Humid' },
-        temp: { hi: '20°C - 30°C', en: '20°C - 30°C' },
-        varieties: { hi: 'सुगंधम, रोमा, सुवर्णा, राजेंद्र सोनिया', en: 'Sugandham, Roma, Suvarna, Rajendra Sonia' },
-        diseases: { hi: 'प्रकंद सड़न (Rhizome Rot), पत्ती धब्बा', en: 'Rhizome Rot, Leaf Spot' },
-        pests: { hi: 'प्रकंद शल्क कीट (Rhizome Scale), तना छेदक', en: 'Rhizome Scale, Shoot Borer' }
-    },
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (मसाला)', en: 'Horticulture (Spice)' },
-        name: { hi: 'धनिया (Coriander)', en: 'Coriander' },
-        bn: 'Coriandrum sativum',
-        chromosome: '2n = 22',
-        origin: { hi: 'भूमध्यसागरीय क्षेत्र', en: 'Mediterranean Region' },
-        climate: { hi: 'शीतोष्ण एवं शुष्क (रबी)', en: 'Temperate and Dry (Rabi)' },
-        temp: { hi: '15°C - 25°C', en: '15°C - 25°C' },
-        varieties: { hi: 'पंत हरितमा, हिसार आनंद, राजेंद्र स्वाति', en: 'Pant Haritima, Hisar Anand, Rajendra Swati' },
-        diseases: { hi: 'तना पिटिका (Stem Gall), चूर्णिल आसिता', en: 'Stem Gall, Powdery Mildew' },
-        pests: { hi: 'माहू (Aphid), सफेद मक्खी', en: 'Aphid, Whitefly' }
-    },
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (मसाला)', en: 'Horticulture (Spice)' },
-        name: { hi: 'अदरक (Ginger)', en: 'Ginger' },
-        bn: 'Zingiber officinale',
-        chromosome: '2n = 22',
-        origin: { hi: 'दक्षिण-पूर्व एशिया', en: 'South-East Asia' },
-        climate: { hi: 'गर्म एवं आर्द्र', en: 'Warm and Humid' },
-        temp: { hi: '20°C - 28°C', en: '20°C - 28°C' },
-        varieties: { hi: 'सुप्रभा, सुरुचि, वरदा, रियो-डी-जनेरियो', en: 'Suprabha, Suruchi, Varada, Rio-de-Janeiro' },
-        diseases: { hi: 'मृदु सड़न (Soft Rot), जीवाणु उकठा', en: 'Soft Rot, Bacterial Wilt' },
-        pests: { hi: 'तना छेदक (Shoot Borer), प्रकंद मक्खी', en: 'Shoot Borer, Rhizome Fly' }
-    },
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (पुष्प)', en: 'Horticulture (Flower)' },
-        name: { hi: 'गुलाब (Rose)', en: 'Rose' },
-        bn: 'Rosa indica',
-        chromosome: '2n = 14, 21, 28',
-        origin: { hi: 'उत्तरी गोलार्ध (एशिया/यूरोप)', en: 'Northern Hemisphere (Asia/Europe)' },
-        climate: { hi: 'समशीतोष्ण एवं हल्का ठंडा', en: 'Temperate and Mild Cool' },
-        temp: { hi: '15°C - 28°C', en: '15°C - 28°C' },
-        varieties: { hi: 'पूसा मोहित, ग्लैडिएटर, सुपर स्टार, ताजमहल', en: 'Pusa Mohit, Gladiator, Super Star, Taj Mahal' },
-        diseases: { hi: 'डाईबैक (Die-back), काला धब्बा, चूर्णिल आसिता', en: 'Die-back, Black Spot, Powdery Mildew' },
-        pests: { hi: 'थ्रिप्स, माहू, रेड स्केल', en: 'Thrips, Aphid, Red Scale' }
-    },
-    {
-        category: 'horticulture',
-        catName: { hi: 'बागवानी (पुष्प)', en: 'Horticulture (Flower)' },
-        name: { hi: 'गेंदा (Marigold)', en: 'Marigold' },
-        bn: 'Tagetes erecta (African)',
-        chromosome: '2n = 24',
-        origin: { hi: 'मेक्सिको', en: 'Mexico' },
-        climate: { hi: 'समशीतोष्ण एवं उष्ण', en: 'Temperate and Tropical' },
-        temp: { hi: '15°C - 30°C', en: '15°C - 30°C' },
-        varieties: { hi: 'पूसा नारंगी गेंदा, पूसा बसंती गेंदा, क्राउन ऑफ गोल्ड', en: 'Pusa Narangi Gainda, Pusa Basanti Gainda, Crown of Gold' },
-        diseases: { hi: 'आर्द्र गलन (Damping Off), पत्ती धब्बा', en: 'Damping Off, Leaf Spot' },
-        pests: { hi: 'माइट्स (Red Spider Mite), कली छेदक', en: 'Red Spider Mite, Bud Borer' }
+    'Tomato': 'vegetable',
+    'Onion': 'vegetable',
+    'Potato': 'vegetable',
+
+    'Chilli': 'spice',
+    'Turmeric': 'spice',
+    'Coriander': 'spice',
+    'Ginger': 'spice',
+
+    'Rose': 'flower',
+    'Marigold': 'flower'
+};
+
+cropsData.forEach(crop => {
+    const newCategory = categoryUpdate[crop.name.en];
+
+    if (newCategory) {
+        crop.category = newCategory;
+        crop.catName = horticultureCategories[newCategory];
     }
+});
+
+// ==========================================
+// 3. NEW CROP DATA HELPER
+// ==========================================
+
+const makeCrop = (
+    category,
+    hi,
+    en,
+    bn,
+    chromosome,
+    origin,
+    climate,
+    temp,
+    varieties,
+    diseases,
+    pests
+) => ({
+    category,
+    catName: horticultureCategories[category],
+    name: { hi, en },
+    bn,
+    chromosome,
+    origin,
+    climate,
+    temp,
+    varieties,
+    diseases,
+    pests
+});
+
+// ==========================================
+// 4. NEW HORTICULTURE CROPS
+// ==========================================
+
+const newHorticultureCrops = [
+
+    // --------------------------------------
+    // A. FRUIT CROPS (फल वाली फसलें)
+    // --------------------------------------
+
+    makeCrop('fruit', 'अमरूद (Guava)', 'Guava',
+        'Psidium guajava', '2n = 22',
+        {hi:'उष्णकटिबंधीय अमेरिका',en:'Tropical America'},
+        {hi:'उष्ण एवं उपोष्णकटिबंधीय',en:'Tropical and Sub-tropical'},
+        {hi:'23°C - 28°C',en:'23°C - 28°C'},
+        {hi:'इलाहाबाद सफेदा, ललित, श्वेता, अर्का मृदुला',en:'Allahabad Safeda, Lalit, Shweta, Arka Mridula'},
+        {hi:'उकठा रोग, फल सड़न, एन्थ्रेक्नोज',en:'Wilt, Fruit Rot, Anthracnose'},
+        {hi:'फल मक्खी, छाल खाने वाला कीट',en:'Fruit Fly, Bark Eating Caterpillar'}
+    ),
+
+    makeCrop('fruit', 'पपीता (Papaya)', 'Papaya',
+        'Carica papaya', '2n = 18',
+        {hi:'मध्य अमेरिका (मैक्सिको)',en:'Central America (Mexico)'},
+        {hi:'गर्म एवं आर्द्र',en:'Warm and Humid'},
+        {hi:'22°C - 30°C',en:'22°C - 30°C'},
+        {hi:'पूसा डिलीशियस, पूसा नन्हा, रेड लेडी-786',en:'Pusa Delicious, Pusa Nanha, Red Lady-786'},
+        {hi:'पपाया रिंग स्पॉट वायरस, जड़ सड़न, एन्थ्रेक्नोज',en:'Papaya Ringspot Virus, Root Rot, Anthracnose'},
+        {hi:'माहू, सफेद मक्खी, मिली बग',en:'Aphid, Whitefly, Mealybug'}
+    ),
+
+    makeCrop('fruit', 'संतरा (Orange)', 'Orange',
+        'Citrus sinensis', '2n = 18',
+        {hi:'दक्षिण-पूर्व एशिया',en:'South-East Asia'},
+        {hi:'उष्ण एवं उपोष्णकटिबंधीय',en:'Tropical and Sub-tropical'},
+        {hi:'15°C - 30°C',en:'15°C - 30°C'},
+        {hi:'नागपुर संतरा, कूर्ग, मौसमी',en:'Nagpur Orange, Coorg, Mosambi'},
+        {hi:'सिट्रस कैंकर, गमोसिस, हरित रोग',en:'Citrus Canker, Gummosis, Citrus Greening'},
+        {hi:'सिट्रस सिल्ला, लीफ माइनर, मिली बग',en:'Citrus Psylla, Leaf Miner, Mealybug'}
+    ),
+
+    makeCrop('fruit', 'नींबू (Lemon)', 'Lemon',
+        'Citrus limon', '2n = 18',
+        {hi:'दक्षिण एवं दक्षिण-पूर्व एशिया',en:'South and South-East Asia'},
+        {hi:'उष्ण एवं उपोष्णकटिबंधीय',en:'Tropical and Sub-tropical'},
+        {hi:'20°C - 30°C',en:'20°C - 30°C'},
+        {hi:'प्रमालिनी, विक्रम, कागजी नींबू',en:'Pramalini, Vikram, Kagzi Lime'},
+        {hi:'सिट्रस कैंकर, गमोसिस, एन्थ्रेक्नोज',en:'Citrus Canker, Gummosis, Anthracnose'},
+        {hi:'लीफ माइनर, सिल्ला, माहू',en:'Leaf Miner, Psylla, Aphid'}
+    ),
+
+    makeCrop('fruit', 'अनार (Pomegranate)', 'Pomegranate',
+        'Punica granatum', '2n = 16',
+        {hi:'ईरान एवं आसपास का क्षेत्र',en:'Iran and adjoining regions'},
+        {hi:'उष्ण एवं शुष्क',en:'Tropical and Arid'},
+        {hi:'25°C - 35°C',en:'25°C - 35°C'},
+        {hi:'भगवा, गणेश, मृदुला, अरक्ता',en:'Bhagwa, Ganesh, Mridula, Arakta'},
+        {hi:'जीवाणु झुलसा, फल सड़न',en:'Bacterial Blight, Fruit Rot'},
+        {hi:'फल छेदक, तितली, मिली बग',en:'Fruit Borer, Butterfly, Mealybug'}
+    ),
+
+    makeCrop('fruit', 'अंगूर (Grapes)', 'Grapes',
+        'Vitis vinifera', '2n = 38',
+        {hi:'पश्चिम एशिया एवं भूमध्यसागरीय क्षेत्र',en:'West Asia and Mediterranean Region'},
+        {hi:'शुष्क एवं अर्ध-शुष्क',en:'Dry and Semi-arid'},
+        {hi:'15°C - 35°C',en:'15°C - 35°C'},
+        {hi:'थॉम्पसन सीडलेस, अनाब-ए-शाही, शरद सीडलेस',en:'Thompson Seedless, Anab-e-Shahi, Sharad Seedless'},
+        {hi:'डाउनी मिल्ड्यू, पाउडरी मिल्ड्यू, एन्थ्रेक्नोज',en:'Downy Mildew, Powdery Mildew, Anthracnose'},
+        {hi:'मिली बग, थ्रिप्स, लीफ हॉपर',en:'Mealybug, Thrips, Leaf Hopper'}
+    ),
+
+    makeCrop('fruit', 'कटहल (Jackfruit)', 'Jackfruit',
+        'Artocarpus heterophyllus', '2n = 56',
+        {hi:'भारत एवं दक्षिण-पूर्व एशिया',en:'India and South-East Asia'},
+        {hi:'गर्म एवं आर्द्र',en:'Warm and Humid'},
+        {hi:'22°C - 35°C',en:'22°C - 35°C'},
+        {hi:'सिंगापुर, गुलाबी, खाजा',en:'Singapore, Pink, Khaja'},
+        {hi:'फल सड़न, तना सड़न, एन्थ्रेक्नोज',en:'Fruit Rot, Stem Rot, Anthracnose'},
+        {hi:'फल छेदक, तना छेदक, मिली बग',en:'Fruit Borer, Stem Borer, Mealybug'}
+    ),
+
+    makeCrop('fruit', 'अनानास (Pineapple)', 'Pineapple',
+        'Ananas comosus', '2n = 50',
+        {hi:'दक्षिण अमेरिका (ब्राजील)',en:'South America (Brazil)'},
+        {hi:'उष्ण एवं आर्द्र',en:'Tropical and Humid'},
+        {hi:'22°C - 32°C',en:'22°C - 32°C'},
+        {hi:'क्यू, क्वीन, मॉरिशस, MD-2',en:'Kew, Queen, Mauritius, MD-2'},
+        {hi:'हृदय सड़न, फल सड़न',en:'Heart Rot, Fruit Rot'},
+        {hi:'मिली बग, स्केल कीट',en:'Mealybug, Scale Insect'}
+    ),
+
+    makeCrop('fruit', 'आँवला (Indian Gooseberry)', 'Indian Gooseberry',
+        'Phyllanthus emblica', '2n = 28',
+        {hi:'भारत',en:'India'},
+        {hi:'उष्ण एवं उपोष्णकटिबंधीय',en:'Tropical and Sub-tropical'},
+        {hi:'20°C - 35°C',en:'20°C - 35°C'},
+        {hi:'NA-7, NA-10, कृष्णा, कंचन',en:'NA-7, NA-10, Krishna, Kanchan'},
+        {hi:'फल सड़न, रतुआ, पत्ती धब्बा',en:'Fruit Rot, Rust, Leaf Spot'},
+        {hi:'फल छेदक, छाल खाने वाला कीट',en:'Fruit Borer, Bark Eating Caterpillar'}
+    ),
+
+    // --------------------------------------
+    // B. VEGETABLE CROPS (सब्जी वाली फसलें)
+    // --------------------------------------
+
+    makeCrop('vegetable', 'लहसुन (Garlic)', 'Garlic',
+        'Allium sativum', '2n = 16',
+        {hi:'मध्य एशिया',en:'Central Asia'},
+        {hi:'शीतोष्ण एवं हल्की ठंडी',en:'Temperate and Cool'},
+        {hi:'12°C - 25°C',en:'12°C - 25°C'},
+        {hi:'जी-1, जी-41, एग्रीफाउंड व्हाइट',en:'G-1, G-41, Agrifound White'},
+        {hi:'बैंगनी धब्बा, बेसल रॉट, सफेद सड़न',en:'Purple Blotch, Basal Rot, White Rot'},
+        {hi:'थ्रिप्स, माइट्स',en:'Thrips, Mites'}
+    ),
+
+    makeCrop('vegetable', 'गाजर (Carrot)', 'Carrot',
+        'Daucus carota', '2n = 18',
+        {hi:'मध्य एशिया',en:'Central Asia'},
+        {hi:'शीतोष्ण एवं ठंडी',en:'Temperate and Cool'},
+        {hi:'15°C - 25°C',en:'15°C - 25°C'},
+        {hi:'पूसा केसर, नैंटिस, पूसा मेघाली',en:'Pusa Kesar, Nantes, Pusa Meghali'},
+        {hi:'अल्टरनेरिया झुलसा, बैक्टीरियल सॉफ्ट रॉट',en:'Alternaria Blight, Bacterial Soft Rot'},
+        {hi:'एफिड, रूट फ्लाई',en:'Aphid, Root Fly'}
+    ),
+
+    makeCrop('vegetable', 'मूली (Radish)', 'Radish',
+        'Raphanus sativus', '2n = 18',
+        {hi:'भूमध्यसागरीय एवं एशियाई क्षेत्र',en:'Mediterranean and Asian Region'},
+        {hi:'शीत एवं समशीतोष्ण',en:'Cool and Temperate'},
+        {hi:'10°C - 25°C',en:'10°C - 25°C'},
+        {hi:'पूसा चेतकी, पूसा हिमानी, जापानी व्हाइट',en:'Pusa Chetki, Pusa Himani, Japanese White'},
+        {hi:'अल्टरनेरिया, सफेद रतुआ',en:'Alternaria, White Rust'},
+        {hi:'मस्टर्ड सॉ फ्लाई, एफिड',en:'Mustard Sawfly, Aphid'}
+    ),
+
+    makeCrop('vegetable', 'शकरकंद (Sweet Potato)', 'Sweet Potato',
+        'Ipomoea batatas', '2n = 90',
+        {hi:'मध्य एवं दक्षिण अमेरिका',en:'Central and South America'},
+        {hi:'गर्म एवं आर्द्र',en:'Warm and Humid'},
+        {hi:'21°C - 30°C',en:'21°C - 30°C'},
+        {hi:'श्री कनका, श्री रत्ना, पूसा सफेद',en:'Sree Kanaka, Sree Ratna, Pusa Safed'},
+        {hi:'काला सड़न, जड़ सड़न',en:'Black Rot, Root Rot'},
+        {hi:'स्वीट पोटेटो वीविल, व्हाइट ग्रब',en:'Sweet Potato Weevil, White Grub'}
+    ),
+
+    makeCrop('vegetable', 'चुकन्दर (Beetroot)', 'Beetroot',
+        'Beta vulgaris', '2n = 18',
+        {hi:'भूमध्यसागरीय क्षेत्र',en:'Mediterranean Region'},
+        {hi:'शीतोष्ण एवं ठंडी',en:'Temperate and Cool'},
+        {hi:'15°C - 25°C',en:'15°C - 25°C'},
+        {hi:'डेट्रॉइट डार्क रेड, क्रिमसन ग्लोब',en:'Detroit Dark Red, Crimson Globe'},
+        {hi:'सर्कोस्पोरा पत्ती धब्बा, डाउनी मिल्ड्यू',en:'Cercospora Leaf Spot, Downy Mildew'},
+        {hi:'एफिड, लीफ माइनर',en:'Aphid, Leaf Miner'}
+    ),
+
+    makeCrop('vegetable', 'बैंगन (Brinjal)', 'Brinjal',
+        'Solanum melongena', '2n = 24',
+        {hi:'भारत एवं दक्षिण-पूर्व एशिया',en:'India and South-East Asia'},
+        {hi:'गर्म एवं आर्द्र',en:'Warm and Humid'},
+        {hi:'22°C - 30°C',en:'22°C - 30°C'},
+        {hi:'पूसा पर्पल लॉन्ग, पूसा हाइब्रिड-6, अर्का निधि',en:'Pusa Purple Long, Pusa Hybrid-6, Arka Nidhi'},
+        {hi:'फोमोप्सिस झुलसा, जीवाणु उकठा',en:'Phomopsis Blight, Bacterial Wilt'},
+        {hi:'फल एवं तना छेदक, जैसिड, सफेद मक्खी',en:'Shoot and Fruit Borer, Jassid, Whitefly'}
+    ),
+
+    makeCrop('vegetable', 'भिंडी (Okra)', 'Okra',
+        'Abelmoschus esculentus', '2n = 130',
+        {hi:'अफ्रीका',en:'Africa'},
+        {hi:'गर्म एवं आर्द्र',en:'Warm and Humid'},
+        {hi:'25°C - 35°C',en:'25°C - 35°C'},
+        {hi:'अर्का अनामिका, परभनी क्रांति, पूसा सावनी',en:'Arka Anamika, Parbhani Kranti, Pusa Sawani'},
+        {hi:'पीला शिरा मोजेक, चूर्णिल आसिता',en:'Yellow Vein Mosaic, Powdery Mildew'},
+        {hi:'जैसिड, सफेद मक्खी, फल छेदक',en:'Jassid, Whitefly, Fruit Borer'}
+    ),
+
+    makeCrop('vegetable', 'फूलगोभी (Cauliflower)', 'Cauliflower',
+        'Brassica oleracea var. botrytis', '2n = 18',
+        {hi:'भूमध्यसागरीय क्षेत्र',en:'Mediterranean Region'},
+        {hi:'शीत एवं समशीतोष्ण',en:'Cool and Temperate'},
+        {hi:'15°C - 25°C',en:'15°C - 25°C'},
+        {hi:'पूसा अर्ली सिंथेटिक, पूसा दीपाली, स्नोबॉल-16',en:'Pusa Early Synthetic, Pusa Deepali, Snowball-16'},
+        {hi:'ब्लैक रॉट, डाउनी मिल्ड्यू, ब्लैक लेग',en:'Black Rot, Downy Mildew, Black Leg'},
+        {hi:'डायमंड बैक मॉथ, कैबेज बटरफ्लाई, एफिड',en:'Diamondback Moth, Cabbage Butterfly, Aphid'}
+    ),
+
+    makeCrop('vegetable', 'मटर (Pea)', 'Pea',
+        'Pisum sativum', '2n = 14',
+        {hi:'भूमध्यसागरीय एवं निकट पूर्व',en:'Mediterranean and Near East'},
+        {hi:'ठंडी एवं शुष्क',en:'Cool and Dry'},
+        {hi:'10°C - 25°C',en:'10°C - 25°C'},
+        {hi:'आर्किल, बोनविले, आजाद पी-1',en:'Arkel, Bonneville, Azad P-1'},
+        {hi:'चूर्णिल आसिता, उकठा, रतुआ',en:'Powdery Mildew, Wilt, Rust'},
+        {hi:'माहू, फली छेदक',en:'Aphid, Pod Borer'}
+    ),
+
+    makeCrop('vegetable', 'पालक (Spinach)', 'Spinach',
+        'Spinacia oleracea', '2n = 12',
+        {hi:'मध्य एवं दक्षिण-पश्चिम एशिया',en:'Central and South-West Asia'},
+        {hi:'शीत एवं ठंडी',en:'Cool and Cold'},
+        {hi:'10°C - 25°C',en:'10°C - 25°C'},
+        {hi:'ऑल ग्रीन, पूसा ज्योति, पूसा हरित',en:'All Green, Pusa Jyoti, Pusa Harit'},
+        {hi:'डाउनी मिल्ड्यू, लीफ स्पॉट',en:'Downy Mildew, Leaf Spot'},
+        {hi:'एफिड, लीफ माइनर',en:'Aphid, Leaf Miner'}
+    ),
+
+    makeCrop('vegetable', 'लौकी (Bottle Gourd)', 'Bottle Gourd',
+        'Lagenaria siceraria', '2n = 22',
+        {hi:'अफ्रीका',en:'Africa'},
+        {hi:'गर्म एवं आर्द्र',en:'Warm and Humid'},
+        {hi:'25°C - 35°C',en:'25°C - 35°C'},
+        {hi:'पूसा नवीन, पूसा संदेश, नरेंद्र रश्मि',en:'Pusa Naveen, Pusa Sandesh, Narendra Rashmi'},
+        {hi:'पाउडरी मिल्ड्यू, डाउनी मिल्ड्यू',en:'Powdery Mildew, Downy Mildew'},
+        {hi:'फल मक्खी, रेड पंपकिन बीटल',en:'Fruit Fly, Red Pumpkin Beetle'}
+    ),
+
+    makeCrop('vegetable', 'करेला (Bitter Gourd)', 'Bitter Gourd',
+        'Momordica charantia', '2n = 22',
+        {hi:'भारत एवं दक्षिण-पूर्व एशिया',en:'India and South-East Asia'},
+        {hi:'गर्म एवं आर्द्र',en:'Warm and Humid'},
+        {hi:'25°C - 35°C',en:'25°C - 35°C'},
+        {hi:'पूसा विशेष, अर्का हरित, प्रिया',en:'Pusa Vishesh, Arka Harit, Priya'},
+        {hi:'डाउनी मिल्ड्यू, पाउडरी मिल्ड्यू, मोजेक',en:'Downy Mildew, Powdery Mildew, Mosaic'},
+        {hi:'फल मक्खी, एफिड, रेड पंपकिन बीटल',en:'Fruit Fly, Aphid, Red Pumpkin Beetle'}
+    ),
+
+    makeCrop('vegetable', 'कद्दू (Pumpkin)', 'Pumpkin',
+        'Cucurbita moschata', '2n = 40',
+        {hi:'मध्य एवं दक्षिण अमेरिका',en:'Central and South America'},
+        {hi:'गर्म एवं आर्द्र',en:'Warm and Humid'},
+        {hi:'20°C - 30°C',en:'20°C - 30°C'},
+        {hi:'अर्का चंदन, पूसा विश्वास, अंबिली',en:'Arka Chandan, Pusa Vishwas, Ambili'},
+        {hi:'डाउनी मिल्ड्यू, पाउडरी मिल्ड्यू',en:'Downy Mildew, Powdery Mildew'},
+        {hi:'रेड पंपकिन बीटल, फल मक्खी',en:'Red Pumpkin Beetle, Fruit Fly'}
+    ),
+
+    // --------------------------------------
+    // C. FLOWER CROPS (फूल वाली फसलें)
+    // --------------------------------------
+
+    makeCrop('flower', 'चमेली (Jasmine)', 'Jasmine',
+        'Jasminum sambac', '2n = 26',
+        {hi:'भारत एवं दक्षिण-पूर्व एशिया',en:'India and South-East Asia'},
+        {hi:'उष्ण एवं उपोष्णकटिबंधीय',en:'Tropical and Sub-tropical'},
+        {hi:'20°C - 30°C',en:'20°C - 30°C'},
+        {hi:'मदनबन, गुंडुमल्ली, रामबनम',en:'Madanban, Gundumalli, Ramban'},
+        {hi:'पत्ती धब्बा, उकठा, कली सड़न',en:'Leaf Spot, Wilt, Bud Rot'},
+        {hi:'मिली बग, कली छेदक, लीफ वेबber',en:'Mealybug, Bud Borer, Leaf Webber'}
+    ),
+
+    makeCrop('flower', 'गुलदाउदी (Chrysanthemum)', 'Chrysanthemum',
+        'Chrysanthemum morifolium', '2n = 54',
+        {hi:'चीन एवं पूर्वी एशिया',en:'China and East Asia'},
+        {hi:'समशीतोष्ण एवं हल्की ठंडी',en:'Temperate and Mild Cool'},
+        {hi:'15°C - 25°C',en:'15°C - 25°C'},
+        {hi:'चंद्रमा, पूसा सेंट, पूसा अनुराधा',en:'Chandrama, Pusa Cent, Pusa Anuradha'},
+        {hi:'लीफ स्पॉट, रतुआ, पाउडरी मिल्ड्यू',en:'Leaf Spot, Rust, Powdery Mildew'},
+        {hi:'एफिड, थ्रिप्स, लीफ माइनर',en:'Aphid, Thrips, Leaf Miner'}
+    ),
+
+    makeCrop('flower', 'कमल (Lotus)', 'Lotus',
+        'Nelumbo nucifera', '2n = 16',
+        {hi:'एशिया',en:'Asia'},
+        {hi:'उष्ण एवं उपोष्णकटिबंधीय',en:'Tropical and Sub-tropical'},
+        {hi:'20°C - 35°C',en:'20°C - 35°C'},
+        {hi:'स्थानीय गुलाबी कमल, सफेद कमल',en:'Local Pink Lotus, White Lotus'},
+        {hi:'पत्ती धब्बा, पत्ती सड़न',en:'Leaf Spot, Leaf Rot'},
+        {hi:'एफिड, लीफ माइनर, जलीय कीट',en:'Aphid, Leaf Miner, Aquatic Insects'}
+    ),
+
+    // --------------------------------------
+    // D. SPICE CROPS (मसाले वाली फसलें)
+    // --------------------------------------
+
+    makeCrop('spice', 'जीरा (Cumin)', 'Cumin',
+        'Cuminum cyminum', '2n = 14',
+        {hi:'भूमध्यसागरीय एवं पश्चिम एशिया',en:'Mediterranean and West Asia'},
+        {hi:'शीत एवं शुष्क',en:'Cool and Dry'},
+        {hi:'15°C - 25°C',en:'15°C - 25°C'},
+        {hi:'आरजेड-19, आरजेड-209, जीसी-4',en:'RZ-19, RZ-209, GC-4'},
+        {hi:'उकठा, झुलसा, चूर्णिल आसिता',en:'Wilt, Blight, Powdery Mildew'},
+        {hi:'एफिड, माइट्स',en:'Aphid, Mites'}
+    ),
+
+    makeCrop('spice', 'काली मिर्च (Black Pepper)', 'Black Pepper',
+        'Piper nigrum', '2n = 52',
+        {hi:'भारत (पश्चिमी घाट)',en:'India (Western Ghats)'},
+        {hi:'गर्म एवं अत्यधिक आर्द्र',en:'Warm and Very Humid'},
+        {hi:'23°C - 32°C',en:'23°C - 32°C'},
+        {hi:'पन्नियूर-1, श्रीकारा, पंचमी',en:'Panniyur-1, Sreekara, Panchami'},
+        {hi:'फाइटोफ्थोरा फुट रॉट, क्विक विल्ट',en:'Phytophthora Foot Rot, Quick Wilt'},
+        {hi:'पोलू बीटल, स्केल कीट',en:'Pollu Beetle, Scale Insect'}
+    ),
+
+    makeCrop('spice', 'इलायची (Cardamom)', 'Cardamom',
+        'Elettaria cardamomum', '2n = 48',
+        {hi:'भारत के पश्चिमी घाट',en:'Western Ghats of India'},
+        {hi:'ठंडी एवं आर्द्र',en:'Cool and Humid'},
+        {hi:'15°C - 25°C',en:'15°C - 25°C'},
+        {hi:'मालाबार, मैसूर, वझुक्का',en:'Malabar, Mysore, Vazhukka'},
+        {hi:'कैंप्टोड्रोमस रोग, कत्ती रोग',en:'Katte Disease, Capsule Rot'},
+        {hi:'थ्रिप्स, शूट बोरर',en:'Thrips, Shoot Borer'}
+    ),
+
+    makeCrop('spice', 'लौंग (Clove)', 'Clove',
+        'Syzygium aromaticum', '2n = 22',
+        {hi:'इंडोनेशिया (मालुकु द्वीप)',en:'Indonesia (Maluku Islands)'},
+        {hi:'उष्ण एवं आर्द्र',en:'Tropical and Humid'},
+        {hi:'20°C - 30°C',en:'20°C - 30°C'},
+        {hi:'स्थानीय चयनित किस्में',en:'Local Selected Types'},
+        {hi:'लीफ ब्लाइट, डाईबैक',en:'Leaf Blight, Dieback'},
+        {hi:'स्केल कीट, स्टेम बोरर',en:'Scale Insect, Stem Borer'}
+    ),
+
+    // --------------------------------------
+    // E. PLANTATION CROPS (बागान वाली फसलें)
+    // --------------------------------------
+
+    makeCrop('plantation', 'चाय (Tea)', 'Tea',
+        'Camellia sinensis', '2n = 30',
+        {hi:'चीन एवं दक्षिण-पूर्व एशिया',en:'China and South-East Asia'},
+        {hi:'उष्ण एवं उपोष्णकटिबंधीय, आर्द्र',en:'Tropical and Sub-tropical, Humid'},
+        {hi:'18°C - 30°C',en:'18°C - 30°C'},
+        {hi:'असम, चाइना, कंबोड',en:'Assam, China, Cambod'},
+        {hi:'ब्लिस्टर ब्लाइट, रेड रस्ट',en:'Blister Blight, Red Rust'},
+        {hi:'टी मॉस्किटो बग, लूपर कैटरपिलर',en:'Tea Mosquito Bug, Looper Caterpillar'}
+    ),
+
+    makeCrop('plantation', 'कॉफी (Coffee)', 'Coffee',
+        'Coffea arabica', '2n = 44',
+        {hi:'इथियोपिया',en:'Ethiopia'},
+        {hi:'उष्ण एवं छायादार',en:'Tropical and Shaded'},
+        {hi:'15°C - 28°C',en:'15°C - 28°C'},
+        {hi:'एस-795, केंट, चंद्रगिरि',en:'S-795, Kent, Chandragiri'},
+        {hi:'कॉफी लीफ रस्ट, बेरी डिजीज',en:'Coffee Leaf Rust, Berry Disease'},
+        {hi:'कॉफी बेरी बोरर, व्हाइट स्टेम बोरर',en:'Coffee Berry Borer, White Stem Borer'}
+    ),
+
+    makeCrop('plantation', 'नारियल (Coconut)', 'Coconut',
+        'Cocos nucifera', '2n = 32',
+        {hi:'दक्षिण-पूर्व एशिया एवं प्रशांत क्षेत्र',en:'South-East Asia and Pacific Region'},
+        {hi:'उष्ण एवं आर्द्र',en:'Tropical and Humid'},
+        {hi:'27°C - 32°C',en:'27°C - 32°C'},
+        {hi:'वेस्ट कोस्ट टॉल, ईस्ट कोस्ट टॉल, चौघाट ऑरेंज ड्वार्फ',en:'West Coast Tall, East Coast Tall, Chowghat Orange Dwarf'},
+        {hi:'बड रॉट, लीफ रॉट, स्टेम ब्लीडिंग',en:'Bud Rot, Leaf Rot, Stem Bleeding'},
+        {hi:'राइनोसेरस बीटल, रेड पाम वीविल',en:'Rhinoceros Beetle, Red Palm Weevil'}
+    ),
+
+    makeCrop('plantation', 'रबर (Rubber)', 'Rubber',
+        'Hevea brasiliensis', '2n = 36',
+        {hi:'ब्राजील (अमेजन क्षेत्र)',en:'Brazil (Amazon Region)'},
+        {hi:'गर्म एवं अत्यधिक आर्द्र',en:'Warm and Very Humid'},
+        {hi:'25°C - 35°C',en:'25°C - 35°C'},
+        {hi:'RRII-105, RRIM-600, GT-1',en:'RRII-105, RRIM-600, GT-1'},
+        {hi:'पिंक डिजीज, पाउडरी मिल्ड्यू, एब्स्ट्रैक्ट ब्लाइट',en:'Pink Disease, Powdery Mildew, Abnormal Leaf Fall'},
+        {hi:'स्केल कीट, मिली बग',en:'Scale Insect, Mealybug'}
+    ),
+
+    makeCrop('plantation', 'काजू (Cashew)', 'Cashew',
+        'Anacardium occidentale', '2n = 42',
+        {hi:'ब्राजील (दक्षिण अमेरिका)',en:'Brazil (South America)'},
+        {hi:'उष्ण एवं शुष्क',en:'Tropical and Dry'},
+        {hi:'24°C - 32°C',en:'24°C - 32°C'},
+        {hi:'वेंगुर्ला-4, वेंगुर्ला-7, उल्लाल-1',en:'Vengurla-4, Vengurla-7, Ullal-1'},
+        {hi:'एन्थ्रेक्नोज, टी मॉस्किटो बग से क्षति',en:'Anthracnose, Tea Mosquito Bug Damage'},
+        {hi:'टी मॉस्किटो बग, स्टेम एवं रूट बोरर',en:'Tea Mosquito Bug, Stem and Root Borer'}
+    ),
+
+    makeCrop('plantation', 'सुपारी (Arecanut)', 'Arecanut',
+        'Areca catechu', '2n = 32',
+        {hi:'मलय द्वीपसमूह एवं दक्षिण-पूर्व एशिया',en:'Malay Archipelago and South-East Asia'},
+        {hi:'उष्ण एवं आर्द्र',en:'Tropical and Humid'},
+        {hi:'20°C - 35°C',en:'20°C - 35°C'},
+        {hi:'मंगलोर, सुमंगला, श्रीवर्धन',en:'Mangalore, Sumangala, Srivardhan'},
+        {hi:'महाली रोग, कोलेटोट्रिकम फल सड़न',en:'Mahali Disease, Colletotrichum Fruit Rot'},
+        {hi:'रेड पाम वीविल, स्पिंडल बग',en:'Red Palm Weevil, Spindle Bug'}
+    ),
+
+    // --------------------------------------
+    // F. MEDICINAL CROPS (औषधीय फसलें)
+    // --------------------------------------
+
+    makeCrop('medicinal', 'अश्वगंधा (Ashwagandha)', 'Ashwagandha',
+        'Withania somnifera', '2n = 48',
+        {hi:'भारत एवं भूमध्यसागरीय क्षेत्र',en:'India and Mediterranean Region'},
+        {hi:'शुष्क एवं अर्ध-शुष्क',en:'Arid and Semi-arid'},
+        {hi:'20°C - 35°C',en:'20°C - 35°C'},
+        {hi:'जवाहर अश्वगंधा-20, पनर-1',en:'Jawahar Ashwagandha-20, PNR-1'},
+        {hi:'अल्टरनेरिया पत्ती धब्बा, जड़ सड़न',en:'Alternaria Leaf Spot, Root Rot'},
+        {hi:'माहू, माइट्स',en:'Aphid, Mites'}
+    ),
+
+    makeCrop('medicinal', 'एलोवेरा (Aloe Vera)', 'Aloe Vera',
+        'Aloe vera', '2n = 14',
+        {hi:'अरब प्रायद्वीप',en:'Arabian Peninsula'},
+        {hi:'गर्म एवं शुष्क',en:'Hot and Dry'},
+        {hi:'20°C - 35°C',en:'20°C - 35°C'},
+        {hi:'IC111271, IC111269, स्थानीय किस्में',en:'IC111271, IC111269, Local Varieties'},
+        {hi:'एन्थ्रेक्नोज, जड़ सड़न',en:'Anthracnose, Root Rot'},
+        {hi:'मिली बग, स्केल कीट',en:'Mealybug, Scale Insect'}
+    ),
+
+    makeCrop('medicinal', 'लेमनग्रास (Lemongrass)', 'Lemongrass',
+        'Cymbopogon flexuosus', '2n = 20',
+        {hi:'भारत एवं दक्षिण-पूर्व एशिया',en:'India and South-East Asia'},
+        {hi:'उष्ण एवं उपोष्णकटिबंधीय',en:'Tropical and Sub-tropical'},
+        {hi:'20°C - 30°C',en:'20°C - 30°C'},
+        {hi:'प्रगति, कावेरी, कृष्णा',en:'Pragati, Cauvery, Krishna'},
+        {hi:'लीफ ब्लाइट, रस्ट',en:'Leaf Blight, Rust'},
+        {hi:'स्टेम बोरर, दीमक',en:'Stem Borer, Termite'}
+    )
+
 ];
+
+// ==========================================
+// 5. ADD NEW CROPS TO MAIN CROPS DATA
+// ==========================================
+
+cropsData.push(...newHorticultureCrops);
+
+// ==========================================
+// 6. CATEGORY FILTER LIST
+// ==========================================
+
+const allCategories = [
+    { id: 'cereal', name: {hi:'खाद्यान्न फसल',en:'Cereal Crop'} },
+    { id: 'pulse', name: {hi:'दलहनी फसल',en:'Pulse Crop'} },
+    { id: 'oilseed', name: {hi:'तिलहनी फसल',en:'Oilseed Crop'} },
+    { id: 'commercial', name: {hi:'व्यावसायिक फसल',en:'Commercial Crop'} },
+    { id: 'medicinal', name: {hi:'औषधीय फसल',en:'Medicinal Crop'} },
+    { id: 'fruit', name: {hi:'फल वाली फसल',en:'Fruit Crop'} },
+    { id: 'vegetable', name: {hi:'सब्जी वाली फसल',en:'Vegetable Crop'} },
+    { id: 'flower', name: {hi:'फूल वाली फसल',en:'Flower Crop'} },
+    { id: 'spice', name: {hi:'मसाले वाली फसल',en:'Spice Crop'} },
+    { id: 'plantation', name: {hi:'बागान वाली फसल',en:'Plantation Crop'} }
+];
+
+// ==========================================
+// 7. CHECK TOTAL CROPS
+// ==========================================
+
+console.log('Total Crops:', cropsData.length);
+console.log('New Crops Added:', newHorticultureCrops.length);
+
+console.log(
+    'Category Wise Count:',
+    allCategories.map(cat => ({
+        category: cat.name.hi,
+        count: cropsData.filter(crop => crop.category === cat.id).length
+    }))
+);
